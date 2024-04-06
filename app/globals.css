@@ -2,32 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* Custom Ant label require */
+
+.ant-form-item-required::before {
+  display: none !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.ant-form-item-required span::after {
+  display: inline-block;
+  margin-inline-start: 6px;
+  position: absolute;
+  color: #ff4d4f;
+  font-size: 12px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.ant-form-item-required span:first-child::after {
+  display: inline-block;
+  margin-inline-start: 4px;
+  position: absolute;
+  color: #ff4d4f;
+  font-size: 12px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.ant-form-item
+  .ant-form-item-label
+  > label
+  .ant-form-item-tooltip:nth-child(2) {
+  margin-inline-start: 14px;
+}
+
+.ant-form-item
+  .ant-form-item-label
+  > label
+  .ant-form-item-tooltip:nth-child(2)::after {
+  display: none !important;
+}
+
+span#required::after {
+  display: inline-block;
+  margin-inline-start: 6px;
+  position: absolute;
+  color: #ff4d4f;
+  font-size: 12px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
 }
