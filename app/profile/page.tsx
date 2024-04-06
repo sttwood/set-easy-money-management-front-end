@@ -1,6 +1,6 @@
 import {getServerSession} from 'next-auth'
 import React from 'react'
-import {authOptions} from '../api/auth/[...nextauth]/route'
+import {authOptions} from '@/lib/authOptions'
 import Image from 'next/image'
 import {redirect} from 'next/navigation'
 
