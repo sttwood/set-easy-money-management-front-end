@@ -5,15 +5,13 @@ import prisma from "../prisma";
 import * as bcrypt from "bcrypt"
 import {compileActivationTemplate, compileResetTemplate, sendMail} from "../mail";
 import {signJwt, verifyJwt} from "../jwt";
-import {NextResponse} from "next/server";
 
 export async function registerUser(user: Omit<User, 'id' | 'emailVerified' | 'image'>) {
 
   const result = await prisma.user.create({
     data: {
       ...user,
-      password: await bcrypt.hash(user.password, 10),
-      role: user.role ? user.role : "user"
+      password: await bcrypt.hash(user.password, 10)
     }
   })
   const {password: hasNewPassword, ...data} = result
@@ -29,7 +27,11 @@ export async function registerUser(user: Omit<User, 'id' | 'emailVerified' | 'im
     body
   })
 
-  return data
+  if (data) {
+    return "success"
+  } else {
+    throw new Error("Something went wrong! Please try again.")
+  }
 }
 
 type ActivateUserFunc = (jwtUserId: string) => Promise<"userNotExist" | "alreadyActivated" | "success">

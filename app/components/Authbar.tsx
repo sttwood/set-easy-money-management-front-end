@@ -11,18 +11,18 @@ import Link from "next/link";
 import {HiMiniMagnifyingGlass} from "react-icons/hi2";
 import {Dropdown, Input, MenuProps} from "antd";
 
-export default function Appbar() {
+export default function Authbar() {
 
   const items: MenuProps[ 'items' ] = [
     {
       label:
-        <span className="flex flex-row gap-2">
+        <span className="flex flex-row gap-[6px] items-center">
           <Image
-            src="/images/eng.png"
+            src="/images/eng_lang.png"
             alt="select eng lang"
-            width={35}
-            height={25}
-            className="w-[35px] h-[25px] object-cover"
+            width={20}
+            height={20}
+            className="w-[20px] h-[20px] object-cover rounded-full"
           />
           <p className="text-base">EN</p>
         </span>
@@ -31,13 +31,13 @@ export default function Appbar() {
     },
     {
       label:
-        <span className="flex flex-row gap-2">
+        <span className="flex flex-row gap-[6px] items-center">
           <Image
-            src="/images/th.png"
+            src="/images/th_lang.png"
             alt="select th lang"
-            width={35}
-            height={25}
-            className="w-[35px] h-[25px] object-cover"
+            width={20}
+            height={20}
+            className="w-[20px] h-[20px] object-cover rounded-full"
           />
           <p className="text-base">TH</p>
         </span>,
@@ -73,18 +73,19 @@ export default function Appbar() {
             className="hidden md:flex md:w-full lg:w-[409px] h-full rounded-[40px] bg-placeholderBG border-none"
           />
         </NavbarItem>
-        <NavbarItem className="hover:outline hover:outline-[7px] hover:outline-placeholderBG hover:rounded-full">
+        <NavbarItem>
           <Dropdown
             menu={{items}}
             trigger={[ 'click' ]}
+            placement="bottomRight"
             className="cursor-pointer"
           >
             <Image
-              src="/images/th.png"
+              src="/images/th_lang.png"
               alt="select lang"
               width={30}
               height={30}
-              className="w-[30px] h-[30px] object-cover rounded-full"
+              className="w-[30px] h-[30px] object-cover rounded-full outline outline-[7px] outline-placeholderBG"
             />
           </Dropdown>
         </NavbarItem>

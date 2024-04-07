@@ -3,43 +3,26 @@ import React, {useState} from 'react'
 import Link from "next/link";
 import {useRouter} from 'next/navigation'
 import {signIn} from 'next-auth/react'
-import {SubmitHandler, useForm} from 'react-hook-form'
-import {z} from 'zod'
-
-import {EyeIcon, EyeSlashIcon} from '@heroicons/react/20/solid'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {Button, Input} from '@nextui-org/react'
 import {toast} from 'react-toastify'
+import {Button, Checkbox, Form, Input} from 'antd';
 
 interface Props {
   callbackUrl?: string
 }
 
-const FormSchema = z.object({
-  email: z
-    .string()
-    .email("Please enter a valid email"),
-  password: z
-    .string({
-      required_error: "Please enter your password",
-    })
-})
-
-type InputType = z.infer<typeof FormSchema>
+type FieldType = {
+  email: string;
+  password: string;
+  termsAndconditions: boolean
+}
 
 const SignInForm = (props: Props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: {errors, isSubmitting}
-  } = useForm<InputType>({
-    resolver: zodResolver(FormSchema)
-  })
   const router = useRouter()
 
-  const [ visiblePass, setVisiblePass ] = useState(false)
+  const [ loadings, setLoadings ] = useState<boolean>(false)
 
-  const onSubmit: SubmitHandler<InputType> = async (data) => {
+  const onSubmit = async (data: FieldType) => {
+    setLoadings(true)
     const res = await signIn('credentials', {
       redirect: false,
       username: data.email,
@@ -47,56 +30,97 @@ const SignInForm = (props: Props) => {
     })
 
     if (!res?.ok) {
+      setLoadings(false)
       toast.error(res?.error)
       return
     }
+    setLoadings(false)
     toast.success("You're logged in successfully")
     router.push(props.callbackUrl ? props.callbackUrl : '/')
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col gap-2 overflow-hidden w-full h-full bg-white rounded-[50px]'
+    <Form
+      name="signIn"
+      onFinish={onSubmit}
+      layout="vertical"
+      autoComplete="off"
+      className='flex flex-col gap-4 py-[5%] px-[7%] overflow-hidden w-full max-w-[700px] bg-[#fff] rounded-[50px]'
     >
-      <div className="bg-gradient-to-b from-white to-slate-200 dark:from-slate-700 dark:to-slate-900 p-2 text-center">
-        Sign In Form
+      <div className='flex flex-col items-center justify-center'>
+        <h2 className='text-main text-[30px] font-bold'>Sign In</h2>
+        <p className='text-subMain text-[20px]'>Enjoy all the services without any ads for free!</p>
       </div>
-      <div className='flex flex-col p-2 gap-2'>
-        <Input
-          label="Email"
-          {...register("email")}
-          errorMessage={errors.email?.message}
-        />
-        <Input
-          label="Password"
-          type={visiblePass ? "text" : "password"}
-          {...register("password")}
-          errorMessage={errors.password?.message}
-          endContent={
-            <button type="button" onClick={() => setVisiblePass((prev) => !prev)}>
-              {visiblePass
-                ? <EyeSlashIcon className='w-4' />
-                : <EyeIcon className='w-4' />
-              }
-            </button>
-          }
-        />
-        <div className="flex items-center justify-center gap-2">
+      <div className='flex flex-col'>
+        <Form.Item<FieldType>
+          label={<span>Email</span>}
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your Email Address!",
+            },
+          ]}
+          className='mb-5 text-main'
+        >
+          <Input
+            type='email'
+            placeholder="Enter your Email Address"
+            className='py-3'
+          />
+        </Form.Item>
+        <Form.Item<FieldType>
+          label={<span>Password</span>}
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your Password!",
+            },
+          ]}
+          className='mb-2 text-main'
+        >
+          <Input.Password
+            placeholder="Enter your Password"
+            className='py-3'
+          />
+        </Form.Item>
+        <Link href={"/auth/forgotPassword"} className='text-end text-[14px] text-primary underline transition-all hover:text-hoverPrimary'>Forgot your password?</Link>
+      </div>
+      <Form.Item<FieldType>
+        name="termsAndconditions"
+        valuePropName="checked"
+        rules={[
+          {
+            required: true,
+            message: "Please accept the terms and conditions",
+          },
+        ]}
+        className='mb-2 text-main'
+      >
+        <Checkbox className='py-2'>
+          By using this service, I agree to our
+          <Link href={"/"} className='text-primary underline ml-1'>
+            Terms and Conditions
+          </Link>
+        </Checkbox>
+      </Form.Item>
+      <div className="flex flex-col gap-4">
+        <Form.Item className="text-center mb-0">
           <Button
-            type='submit'
-            color="primary"
-            disabled={isSubmitting}
-            isLoading={isSubmitting}
+            type="primary"
+            htmlType="submit"
+            className='w-[60%] bg-primary rounded-2xl h-[48px] text-2xl'
+            loading={loadings}
           >
-            {isSubmitting ? "Signing In..." : "Sign In"}
+            Sign in
           </Button>
-          <Button as={Link} href="/auth/signup">
-            Sign Up
-          </Button>
-        </div>
+        </Form.Item>
+        <span className='text-center'>
+          Don’t have an acount? <Link href={"/auth/signup"} className='text-primary underline ml-1'>Sign up</Link>
+        </span>
       </div>
-    </form>
+    </Form>
   )
 }
 

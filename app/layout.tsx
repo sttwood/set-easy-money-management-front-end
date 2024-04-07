@@ -3,7 +3,6 @@ import {Inter} from "next/font/google";
 import {Providers} from "./providers";
 
 import "./globals.css";
-import Appbar from "./components/Appbar";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,7 +22,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Appbar />
           {children}
           <ToastContainer />
         </Providers>

@@ -1,72 +1,82 @@
 "use client"
 
 import {forgotPassword} from '@/lib/actions/authAction'
-import {EnvelopeIcon} from '@heroicons/react/20/solid'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {Button, Input} from '@nextui-org/react'
-import Image from 'next/image'
-import React from 'react'
-import {SubmitHandler, useForm} from 'react-hook-form'
+import {Button, Form, Input} from 'antd'
+import {signIn} from 'next-auth/react'
+import React, {useState} from 'react'
 import {toast} from 'react-toastify'
-import {z} from 'zod'
 
-const FormSchema = z.object({
-  email: z.string().email("Please enter a valid email"),
-})
-
-type InputType = z.infer<typeof FormSchema>
+type FieldType = {
+  email: string;
+}
 
 const ForgotPasswordPage = () => {
-  const {
-    register, 
-    handleSubmit, 
-    reset, 
-    formState: {errors, isSubmitting}
-  } = useForm<InputType>({
-    resolver: zodResolver(FormSchema),
-  })
+  const [ loadings, setLoadings ] = useState<boolean>(false)
 
-  const submitRequest: SubmitHandler<InputType> = async (data) => {
+  const submitRequest = async (data: FieldType) => {
+    setLoadings(true)
     try {
       const result = await forgotPassword(data.email)
-      if (result) toast.success("Reset password link was sent to your email.")
-      reset()
-
+      if (result) {
+        setLoadings(false)
+        toast.success("Reset password link was sent to your email.")
+      }
     } catch (error) {
+      setLoadings(false)
       console.log(error)
       toast.error("Something went wrong. Please try again")
     }
   }
 
   return (
-    <div className='grid gird-cols-1 md:grid-cols-3 items-center'>
-      <form 
-        onSubmit={handleSubmit(submitRequest)}
-        className='flex flex-col gap-2 m-2 p-2 border rounded-md shadow'
+    <div className="flex flex-col items-center px-[5%] pt-[3%] pb-[10%] h-screen bg-[url('/images/bg-auth.png')]">
+      <Form
+        name="forgotPass"
+        onFinish={submitRequest}
+        layout="vertical"
+        autoComplete="off"
+        className='flex flex-col gap-[30px] py-[5%] px-[7%] overflow-hidden w-full max-w-[700px] bg-[#fff] rounded-[50px]'
       >
-        <div className="text-center p-2">Enter your email</div>
-        <Input
-          label="Email"
-          startContent={<EnvelopeIcon className="w-4" />}
-          errorMessage={errors.email?.message}
-          {...register('email')}
-        />
-        <Button 
-          type='submit'
-          isLoading={isSubmitting} 
-          disabled={isSubmitting}
+        <div className='flex flex-col items-center justify-center text-center'>
+          <h2 className='text-main text-[30px] font-bold'>Forget your password</h2>
+          <p className='text-subMain text-[20px]'>Please enter the email that you want to reset password.</p>
+        </div>
+        <Form.Item<FieldType>
+          label={<span>Email</span>}
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your Email Address!",
+            },
+          ]}
+          className='mb-0 text-main'
         >
-          {isSubmitting ? "Please Wait..." : "Submit"}
-        </Button>
-      </form>
-
-      <Image 
-        src="/images/login.png" 
-        alt='forgot password' 
-        width={500} 
-        height={500} 
-        className='col-span-2 place-self-center' 
-      />
+          <Input
+            type='email'
+            placeholder="Enter your Email Address"
+            className='py-3'
+          />
+        </Form.Item>
+        <Form.Item className="text-center mb-0 w-full">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className='w-full bg-primary rounded-2xl h-[48px] text-2xl'
+            loading={loadings}
+          >
+            Submit
+          </Button>
+        </Form.Item>
+        <div className='text-center mb-0'>
+          Back to <span
+            onClick={() => signIn()}
+            className='text-primary hover:text-hoverPrimary transition-all underline cursor-pointer'
+          >
+            Sign in
+          </span>
+        </div>
+      </Form>
     </div>
   )
 }
