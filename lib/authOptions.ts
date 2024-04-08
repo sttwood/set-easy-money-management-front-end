@@ -12,7 +12,6 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
-  // adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     CredentialsProvider({
       name: "Sign In",
@@ -37,9 +36,6 @@ export const authOptions: AuthOptions = {
 
         if (!user) throw new Error("Username or Password is not correct")
 
-        // This is naive way of comparing the password
-        // const isPasswordCorrect = (credentials?.password === user.password)
-
         if (!credentials?.password) throw new Error("Please provide your password")
         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
 
@@ -51,42 +47,8 @@ export const authOptions: AuthOptions = {
         return userWithoutPass
       }
     }),
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID!,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    //   profile(profile) {
-    //     return {
-    //       id: profile.sub,
-    //       email: profile.email,
-    //       name: profile.name,
-    //       image: profile.picture,
-    //       role: profile.role ? profile.role : "user"
-    //     }
-    //   }
-    // })
   ],
   callbacks: {
-    // async signIn({account, profile}) {
-    //   if (account?.provider === "google" && profile) {
-    //     const user = await prisma.user.findUnique({
-    //       where: {
-    //         email: profile.email
-    //       }
-    //     })
-
-    //     if (!user) {
-    //       await prisma.user.create({
-    //         data: {
-    //           email: profile.email,
-    //           firstName: profile.given_name,
-    //           lastName: profile.family_name,
-    //           image: profile.picture ?? ''
-    //         }
-    //       })
-    //     }
-    //   }
-    //   return true
-    // },
     async jwt({user, token}) {
       if (user) token.user = user as User
 

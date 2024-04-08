@@ -3,6 +3,9 @@ import {withAuth} from 'next-auth/middleware'
 export default withAuth({
   callbacks: {
     authorized: async ({req, token}: {req: any, token: any}) => {
+      // if (req.nextUrl.pathname.startsWith('/')) {
+      //   return '/dashboard';
+      // }
       if (req.nextUrl.pathname.startsWith('/admin')) {
         return token?.role === 'admin'
       }
@@ -17,6 +20,5 @@ export const config = {
     '/dashboard',
     '/income-expense',
     '/savings',
-    '/admin/:path*',
   ]
 }

@@ -36,7 +36,7 @@ const SignInForm = (props: Props) => {
     }
     setLoadings(false)
     toast.success("You're logged in successfully")
-    router.push(props.callbackUrl ? props.callbackUrl : '/')
+    router.push('/dashboard')
   }
 
   return (

@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {Inter} from "next/font/google";
+import {Inter, Karla} from "next/font/google";
 import {Providers} from "./providers";
 
 import "./globals.css";
@@ -7,6 +7,7 @@ import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({subsets: [ "latin" ]});
+const karla = Karla({subsets: [ "latin" ]});
 
 export const metadata: Metadata = {
   title: "SET-Easy Money Management",
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={karla.className}>
         <Providers>
           {children}
           <ToastContainer />
