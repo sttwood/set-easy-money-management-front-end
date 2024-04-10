@@ -7,6 +7,14 @@ const nextConfig = {
         hostname: "lh3.googleusercontent.com",
       },
     ],
+  },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.hbs$/,
+      loader: 'handlebars-loader'
+    });
+
+    return config;
   }
 };
 

@@ -8,7 +8,7 @@
 }
 
 /* Custom Ant label require */
-.ant-form-item-required: : before {
+.ant-form-item-required::before {
   display: none !important;
 }
 
