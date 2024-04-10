@@ -16,17 +16,21 @@ const config: Config = {
     },
     colors: {
       "header": "#343C6A",
+      "mainDark": "#2B2B3D",
       "main": "#212B27",
       "subMain": "#333333",
       "primary": "#2D60FF",
       "secondaryText": "#B1B1B1",
+      "alert": "#FF2F2F",
+      "lightAlert": "#FF2F2F",
       "secondaryBG": "#F4F6F9",
       "hoverPrimary": "#4096ff",
       "hoverDanger": "#FF7875",
       "placeholderText": "#8BA3CB",
       "placeholderICON": "#718EBF",
       "placeholderBG": "#F5F7FA",
-      "border": "##0000001a"
+      "border": "##0000001a",
+      "borderBlueLight": "#E6EFF5"
     }
   },
   plugins: [ nextui() ],
