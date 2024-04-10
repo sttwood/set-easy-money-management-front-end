@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React, {useEffect, useState} from 'react'
 
 const Siderbar = () => {
-  const [ collapsed, setCollapsed ] = useState(window.innerWidth < 1024)
+  const [ collapsed, setCollapsed ] = useState(false)
   const [ isDashboardHovered, setIsDashboardHovered ] = useState(false)
   const [ isInExHovered, setIsInExHovered ] = useState(false)
   const [ isSavingsHovered, setIsSavingsHovered ] = useState(false)
