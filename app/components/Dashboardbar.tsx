@@ -6,8 +6,12 @@ import {LoadingOutlined} from '@ant-design/icons'
 import {HiMiniMagnifyingGlass} from "react-icons/hi2";
 import {Button, Input, MenuProps, Spin} from "antd";
 import {signOut, useSession} from "next-auth/react";
+import {useSidebarData} from "@/context/SidebarContext";
+import {usePathname} from "next/navigation";
 
 export default function Dashboardbar() {
+  const {collapsed, titlePage} = useSidebarData()
+  const pathname = usePathname()
   const {data: session} = useSession()
 
   const items: MenuProps[ 'items' ] = [
@@ -44,8 +48,8 @@ export default function Dashboardbar() {
 
   return (
     <nav className="py-5 bg-[#fff] w-full px-[5%] flex flex-row items-center justify-between">
-      <h2 className="text-header text-[24px] xl:text-[28px] font-bold transition-all">
-        Dashboard
+      <h2 className={`text-header text-[24px] xl:text-[28px] font-bold transition-all ${collapsed ? 'pl-10' : 'pl-[275px]'}`}>
+        {pathname === `/${titlePage}` ? titlePage : 'Loading...'}
       </h2>
 
       <div className="flex flex-row items-center gap-[24px] lg:gap-[48px]">

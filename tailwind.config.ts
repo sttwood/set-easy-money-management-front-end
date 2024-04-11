@@ -24,6 +24,8 @@ const config: Config = {
       "alert": "#FF2F2F",
       "lightAlert": "#FF2F2F",
       "secondaryBG": "#F4F6F9",
+      "borderLightBlue": "#DFEAF2",
+      "bluePastelText": "#718EBF",
       "hoverPrimary": "#4096ff",
       "hoverDanger": "#FF7875",
       "placeholderText": "#8BA3CB",

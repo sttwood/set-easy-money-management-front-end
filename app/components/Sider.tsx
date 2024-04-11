@@ -1,27 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
+import {useSidebarData} from '@/context/SidebarContext';
 import {signOut} from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 
 const Siderbar = () => {
   const pathname = usePathname()
-
-  const [ collapsed, setCollapsed ] = useState(false)
-  const [ isDashboardHovered, setIsDashboardHovered ] = useState(false)
-  const [ isInExHovered, setIsInExHovered ] = useState(false)
-  const [ isSavingsHovered, setIsSavingsHovered ] = useState(false)
-  const [ isSupportHovered, setIsSupportHovered ] = useState(false)
-  const [ isSignOutHovered, setIsSignOutHovered ] = useState(false)
+  const {collapsed, updateSidebarData, updateTitlePage} = useSidebarData()
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setCollapsed(true);
+        updateSidebarData(true);
       } else {
-        setCollapsed(window.innerWidth < 1024);
+        updateSidebarData(window.innerWidth < 1024);
       }
     };
 
@@ -55,12 +51,12 @@ const Siderbar = () => {
 
   return (
     <div
-      className={`flex flex-col justify-between bg-[#fff] h-screen py-6 transition-all border-r-1 border-borderBlueLight ${collapsed ? 'w-[60px]' : 'w-[275px]'}`}
+      className={`fixed left-0 top-0 h-screen flex flex-col justify-between bg-[#fff] py-6 transition-all border-r-1 border-borderBlueLight ${collapsed ? 'w-[60px]' : 'w-[275px]'}`}
     >
       <div className='flex flex-col'>
         <div className='flex justify-center items-center mb-10'>
           <Image
-            src={collapsed ? "/images/logo-set.png" : "/images/Logo.png"}
+            src={collapsed ? "/images/logo-set.png" : "/images/logo.png"}
             alt="logo"
             width={collapsed ? 46 : 200}
             height={collapsed ? 46 : 50}
@@ -69,7 +65,7 @@ const Siderbar = () => {
         <div className={`flex flex-row mb-5 ${collapsed ? 'px-0 justify-center' : 'px-[36px] justify-between'}`}>
           {!collapsed && <p className='m-0 p-0 text-[14px] text-[#B1B1B1]'>Menu</p>}
           <button
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => updateSidebarData(!collapsed)}
             className='bg-primary hover:bg-hoverPrimary border-0 w-[25px] h-[25px] rounded-full flex justify-center items-center transition-all'
           >
             <Image
@@ -87,6 +83,7 @@ const Siderbar = () => {
               key={`menu-item-${index}`}
               href={item.path}
               className={`group relative flex flex-row items-center cursor-pointer transition-all ${pathname === item.path ? 'bg-secondaryBG' : ''} ${collapsed && 'justify-center'}`}
+              onClick={() => updateTitlePage(item.title)}
             >
               {pathname === item.path && <div className='absolute left-0 w-[6px] h-full bg-primary rounded-e-[10px] transition-all' />}
               <div className='py-4 flex flex-row gap-[25px] items-center'>
@@ -106,7 +103,7 @@ const Siderbar = () => {
       <div>
         <Link
           href={"/support"}
-          className={`group relative flex flex-row items-center cursor-pointer hover:bg-secondaryBG transition-all ${collapsed && 'justify-center'}`}
+          className={`group relative flex flex-row items-center cursor-default hover:bg-secondaryBG transition-all pointer-events-none ${collapsed && 'justify-center'}`}
         >
           {pathname === '/support' && <div className='absolute left-0 w-[6px] h-full bg-primary rounded-e-[10px] transition-all' />}
           <div className='py-4 flex flex-row gap-[25px] items-center'>

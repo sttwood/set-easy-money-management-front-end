@@ -7,8 +7,9 @@ import Landingbar from "./components/Landingbar";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-secondaryBG">
       <Landingbar />
+
       <section id="home" className="flex flex-col justify-center items-center w-[90%] md:w-[75%] mx-auto pt-[166px]">
         <h1 className="text-[40px] lg:text-[55px] xl:text-[65px] text-mainDark font-extrabold mb-[10px] lg:mb-[20px]">
           Easy Money
@@ -32,6 +33,7 @@ export default function Home() {
           className="object-cover"
         />
       </section>
+
       <section id="services" className="flex flex-col justify-center w-[75%] mx-auto gap-[107px] pt-[191px]">
         <div>
           <h3 className="text-[24px] lg:text-[34px] xl:text-[44px] text-mainDark font-extrabold">Our features</h3>

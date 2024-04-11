@@ -1,7 +1,7 @@
 "use client"
 import {signIn} from 'next-auth/react'
 import React from 'react'
-import CustomButton, {ButtonType} from '../ui/CustomButton'
+import SETButton, {ButtonType} from '../ui/SETButton'
 import {useRouter} from 'next/navigation'
 
 interface Props {
@@ -15,13 +15,13 @@ const SigninButton = ({containerStyle, signInStyle, signUpStyle}: Props) => {
 
   return (
     <div className={`flex items-center gap-4 ${containerStyle}`}>
-      <CustomButton
+      <SETButton
         handleClick={() => signIn()}
         title="Sign In"
         type={ButtonType.borderPrimary}
         buttonStyle={`max-h-[40px] min-h-[40px] h-full rounded-[8px] ${signInStyle}`}
       />
-      <CustomButton
+      <SETButton
         handleClick={() => {
           router.push('/auth/signup')
         }}

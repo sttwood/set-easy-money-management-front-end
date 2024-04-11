@@ -15,7 +15,7 @@ interface Props {
   buttonStyle?: string
 }
 
-const CustomButton = (props: Props) => {
+const SETButton = (props: Props) => {
   const {title, handleClick, type, buttonStyle} = props
 
   const renderType = () => {
@@ -59,4 +59,4 @@ const CustomButton = (props: Props) => {
   )
 }
 
-export default CustomButton
+export default SETButton

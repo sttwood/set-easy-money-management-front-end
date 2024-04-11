@@ -4,15 +4,15 @@ import {activationTemplate} from './emailTemplate/activation';
 import {resetPasswordTemplate} from './emailTemplate/resetPass';
 
 export const sendMail = async ({
-  to, 
-  subject, 
+  to,
+  subject,
   body
 }: {
-  to:string, 
-  subject: string, 
+  to: string,
+  subject: string,
   body: string
 }) => {
-  const {SMTP_EMAIL, SMTP_GMAIL_PASS, SMTP_USER, SMTP_PASS} =process.env
+  const {SMTP_EMAIL, SMTP_GMAIL_PASS, SMTP_USER, SMTP_PASS} = process.env
   // const transport = nodemailer.createTransport({
   //   service: 'gmail',
   //   auth: {

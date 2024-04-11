@@ -25,6 +25,7 @@
     "bcrypt": "^5.1.1",
     "check-password-strength": "^2.0.10",
     "clsx-tailwind-merge": "^1.0.4",
+    "dayjs": "^1.11.10",
     "framer-motion": "^11.0.14",
     "handlebars": "^4.7.8",
     "jsonwebtoken": "^9.0.2",

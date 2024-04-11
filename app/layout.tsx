@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import {redirect} from "next/navigation";
 import {authOptions} from "@/lib/authOptions";
 import {getServerSession} from "next-auth";
+import {createContext} from "react";
+import {SidebarProvider} from "@/context/SidebarContext";
 
 const inter = Inter({subsets: [ "latin" ]});
 const karla = Karla({subsets: [ "latin" ]});
@@ -22,6 +24,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   const session = await getServerSession(authOptions)
 
   if (session) {
@@ -31,10 +34,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={karla.className}>
-        <Providers>
-          {children}
-          <ToastContainer />
-        </Providers>
+        <SidebarProvider>
+          <Providers>
+            {children}
+            <ToastContainer />
+          </Providers>
+        </SidebarProvider>
       </body>
     </html>
   );
