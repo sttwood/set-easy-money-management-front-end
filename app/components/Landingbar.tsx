@@ -123,7 +123,7 @@ export default function Landingbar() {
                     alt="select lang"
                     width={30}
                     height={30}
-                    className="w-[30px] h-[30px] object-cover rounded-full"
+                    className="w-[30px] h-[30px] object-fill rounded-full"
                   />
                 </Dropdown>
                 <SigninButton containerStyle="hidden md:flex" handleClick={onRedirect} />

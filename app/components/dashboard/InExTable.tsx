@@ -58,25 +58,25 @@ const InExTable = () => {
 
   const columns: TableProps<DataType>[ 'columns' ] = [
     {
-      title: <p className='text-bluePastelText fontBold'>Date</p>,
+      title: <p className='text-bluePastel fontBold'>Date</p>,
       key: 'createdAt',
       dataIndex: 'createdAt',
       render: (createdAt: string) => <p className='text-main'>{dayjs(createdAt).format('MM-DD-YYYY')}</p>,
     },
     {
-      title: <p className='text-bluePastelText fontBold'>Note</p>,
+      title: <p className='text-bluePastel fontBold'>Note</p>,
       key: 'note',
       dataIndex: 'note',
       render: (note: string) => <p className='text-main'>{note}</p>,
     },
     {
-      title: <p className='text-bluePastelText fontBold'>Price</p>,
+      title: <p className='text-bluePastel fontBold'>Price</p>,
       key: 'price',
       dataIndex: 'price',
       render: (price: string) => <p className='text-main'>{price}</p>,
     },
     {
-      title: <p className='text-bluePastelText fontBold'>Category</p>,
+      title: <p className='text-bluePastel fontBold'>Category</p>,
       key: 'category',
       dataIndex: 'category',
       render: (category: string, record: DataType) => {
@@ -148,7 +148,7 @@ const InExTable = () => {
           suffixIcon={
             <IoIosArrowDown />
           }
-          className='border-borderLightBlue rounded-[15px] text-bluePastelText text-[15px] w-full'
+          className='border-borderLightBlue rounded-[15px] text-bluePastel text-[15px] w-full'
           allowClear={false}
         />
         <Input

@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "auth": "url('/images/bg-auth.png)"
+        "auth": "url('/images/bg-auth.png)",
+        "landingPage": "url('/images/BG-LandingPage.png')"
       },
     },
     colors: {
@@ -23,8 +24,11 @@ const config: Config = {
       "lightAlert": "#FF2F2F",
       "secondaryBG": "#F4F6F9",
       "borderLightBlue": "#DFEAF2",
-      "bluePastelText": "#718EBF",
-      "hoverPrimary": "#4096ff",
+      "bluePastel": "#718EBF",
+      "greenPastel": "#BEECE1",
+      "rePastel": "#BEECE1",
+      "yellowPastel": "#FCD4CF",
+      "hoverPrimary": "#F5E6C2",
       "hoverDanger": "#FF7875",
       "placeholderText": "#8BA3CB",
       "placeholderICON": "#718EBF",

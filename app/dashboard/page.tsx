@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
-import React, {useEffect, useState} from 'react'
-import Graph from '../components/dashboard/Graph'
+import React, {useEffect} from 'react'
 import InExTable from '../components/dashboard/InExTable'
 import Summary from '../components/dashboard/Summary'
 import SETHeader, {RightElementType} from '../components/ui/SETHeader'
 import {useSidebarData} from '@/context/SidebarContext'
 import {Spin} from 'antd'
+import SETBarChart from '../components/ui/SETBarChart'
+import SavingsHeader from '../components/dashboard/SavingsHeader'
 
 const DashboardPage = () => {
   const {collapsed, isRedirect, updateIsRedirect} = useSidebarData()
@@ -27,7 +28,7 @@ const DashboardPage = () => {
             title="Income-Expense Graph"
             rightElementType={RightElementType.SelectYear}
           />
-          <Graph />
+          <SETBarChart />
         </div>
         <div className="flex flex-row justify-between gap-6  mx-auto">
           <div className="w-full mx-auto p-6 bg-[#fff] rounded-[8px] mt-6">
@@ -42,6 +43,8 @@ const DashboardPage = () => {
               title="Savings"
               rightElementType={RightElementType.Export}
             />
+            <SavingsHeader />
+            <SETBarChart />
           </div>
         </div>
       </main>

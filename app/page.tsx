@@ -5,7 +5,7 @@ import {Button, Spin} from "antd";
 import Image from "next/image";
 import {signIn} from "next-auth/react";
 import Landingbar from "./components/Landingbar";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useSidebarData} from "@/context/SidebarContext";
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="bg-secondaryBG">
+      <main className="bg-[url('/images/BG-LandingPage.png')] bg-cover">
         <Landingbar />
 
         <section id="home" className="flex flex-col justify-center items-center w-[90%] md:w-[75%] mx-auto pt-[166px]">
