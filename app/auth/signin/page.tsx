@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 import React, {useEffect, useState} from 'react'
 import SignInForm from '@/app/components/auth/SignInForm'
 import Image from 'next/image'
 import Link from 'next/link'
+import {Spin} from 'antd'
+import {useSidebarData} from '@/context/SidebarContext'
 
 interface Props {
   searchParams: {
@@ -12,6 +15,8 @@ interface Props {
 }
 
 const SigninPage = ({searchParams}: Props) => {
+  const {isRedirect, updateIsRedirect} = useSidebarData()
+
   const [ mobileSize, setMobileSize ] = useState(false)
 
   useEffect(() => {
@@ -23,12 +28,18 @@ const SigninPage = ({searchParams}: Props) => {
       }
     };
 
+    updateIsRedirect(false)
+
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [])
+
+  const onRedirect = () => {
+    updateIsRedirect(true)
+  }
 
   return (
     mobileSize ? (
@@ -46,9 +57,12 @@ const SigninPage = ({searchParams}: Props) => {
         </Link>
       </div>
     ) : (
-      <div className="flex flex-col items-center px-[5%] pt-[3%] pb-[10%] h-screen bg-[url('/images/bg-auth.png')]">
-        <SignInForm callbackUrl={searchParams?.callbackUrl} />
-      </div>
+      <>
+        <div className="flex flex-col items-center px-[5%] pt-[3%] pb-[10%] h-screen bg-[url('/images/bg-auth.png')]">
+          <SignInForm callbackUrl={searchParams?.callbackUrl} handleClick={onRedirect} />
+        </div>
+        <Spin spinning={isRedirect} fullscreen />
+      </>
     )
   )
 }

@@ -10,7 +10,12 @@ import React, {useEffect} from 'react'
 
 const Siderbar = () => {
   const pathname = usePathname()
-  const {collapsed, updateSidebarData, updateTitlePage} = useSidebarData()
+  const {
+    collapsed,
+    updateIsRedirect,
+    updateSidebarData,
+    updateTitlePage
+  } = useSidebarData()
 
   useEffect(() => {
     const handleResize = () => {
@@ -83,7 +88,12 @@ const Siderbar = () => {
               key={`menu-item-${index}`}
               href={item.path}
               className={`group relative flex flex-row items-center cursor-pointer transition-all ${pathname === item.path ? 'bg-secondaryBG' : ''} ${collapsed && 'justify-center'}`}
-              onClick={() => updateTitlePage(item.title)}
+              onClick={() => {
+                updateTitlePage(item.title)
+                if (pathname !== item.path) {
+                  updateIsRedirect(true)
+                }
+              }}
             >
               {pathname === item.path && <div className='absolute left-0 w-[6px] h-full bg-primary rounded-e-[10px] transition-all' />}
               <div className='py-4 flex flex-row gap-[25px] items-center'>
@@ -118,7 +128,10 @@ const Siderbar = () => {
           </div>
         </Link>
         <div
-          onClick={() => signOut()}
+          onClick={() => {
+            updateIsRedirect(true)
+            signOut()
+          }}
           className={`group relative flex flex-row items-center gap-[25px]  cursor-pointer hover:bg-secondaryBG transition-all py-4 ${collapsed && 'justify-center'}`}
         >
           <Image

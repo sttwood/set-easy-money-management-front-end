@@ -1,13 +1,14 @@
 "use client"
-import React, {useState} from 'react'
+import React, {Dispatch, SetStateAction, useState} from 'react'
 import Link from "next/link";
 import {useRouter} from 'next/navigation'
 import {signIn} from 'next-auth/react'
 import {toast} from 'react-toastify'
 import {Button, Checkbox, Form, Input} from 'antd';
 
-interface Props {
+type Props = {
   callbackUrl?: string
+  handleClick: () => void
 }
 
 type FieldType = {
@@ -17,6 +18,7 @@ type FieldType = {
 }
 
 const SignInForm = (props: Props) => {
+  const {callbackUrl, handleClick} = props
   const router = useRouter()
 
   const [ loadings, setLoadings ] = useState<boolean>(false)
@@ -34,6 +36,7 @@ const SignInForm = (props: Props) => {
       toast.error(res?.error)
       return
     }
+    handleClick()
     setLoadings(false)
     toast.success("You're logged in successfully")
     router.push('/dashboard')

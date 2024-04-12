@@ -23,8 +23,14 @@ type FieldType = {
   role?: string
 }
 
-const SignUpForm = () => {
+type Props = {
+  handleClick?: () => void
+}
+
+const SignUpForm = (props: Props) => {
   const router = useRouter()
+
+  const {handleClick} = props
 
   const [ password, setPassword ] = useState<string>("")
   const [ passStrength, setPassStrength ] = useState<number>(0)
@@ -55,6 +61,7 @@ const SignUpForm = () => {
           setSignUpSuccess(true)
         }
         setTimeout(() => {
+          handleClick && handleClick()
           signIn()
         }, 3000)
         toast.success("User registered successfully.")

@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import {useEffect, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {IoMenu, IoClose} from "react-icons/io5";
 import {Dropdown, Row, Col, MenuProps} from "antd";
 import SigninButton from "./auth/SigninButton";
+import {useSidebarData} from "@/context/SidebarContext";
 
 const NavbarItems = [
   {label: "Home", key: "home", path: "#home"},
@@ -15,6 +16,8 @@ const NavbarItems = [
 ];
 
 export default function Landingbar() {
+  const {updateIsRedirect} = useSidebarData()
+
   const [ isMobileOpen, setIsMobileOpen ] = useState<boolean>(false)
   const [ color, setColor ] = useState<string>('transparent')
   const [ textColor, setTextColor ] = useState<string>('#858396')
@@ -53,6 +56,10 @@ export default function Landingbar() {
 
   const toggleMobileMenu = () => {
     setIsMobileOpen(!isMobileOpen)
+  }
+
+  const onRedirect = () => {
+    updateIsRedirect(true)
   }
 
   useEffect(() => {
@@ -119,7 +126,7 @@ export default function Landingbar() {
                     className="w-[30px] h-[30px] object-cover rounded-full"
                   />
                 </Dropdown>
-                <SigninButton containerStyle="hidden md:flex" />
+                <SigninButton containerStyle="hidden md:flex" handleClick={onRedirect} />
               </div>
             </div>
 

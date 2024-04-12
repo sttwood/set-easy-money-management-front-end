@@ -1,17 +1,16 @@
+"use client"
+
 import React from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@nextui-org/react";
 import Image from "next/image";
 import SigninButton from "./auth/SigninButton";
 import Link from "next/link";
 import {HiMiniMagnifyingGlass} from "react-icons/hi2";
 import {Dropdown, Input, MenuProps} from "antd";
+import {useSidebarData} from "@/context/SidebarContext";
+import {usePathname} from "next/navigation";
 
 export default function Authbar() {
+  const {updateIsRedirect} = useSidebarData()
 
   const items: MenuProps[ 'items' ] = [
     {
@@ -46,34 +45,30 @@ export default function Authbar() {
   ];
 
   return (
-    <Navbar className="py-1 px-0 bg-[#fff]">
+    <nav className="py-4 px-[10%] bg-[#fff] flex flex-row items-center justify-between w-full">
       <Link
         href="/"
+        onClick={() => updateIsRedirect(true)}
         className="transition-colors"
       >
-        <NavbarBrand className="flex flex-row gap-2">
-          <Image
-            src="/images/logo-set.png"
-            alt="logo"
-            width={36}
-            height={36}
-          />
-          <div className="flex flex-col">
-            <p className="font-bold text-[20px] text-header">EMM</p>
-            <p className="text-[8px] text-header leading-3">Easy Money Management</p>
-          </div>
-        </NavbarBrand>
+        <Image
+          src="/images/logo.png"
+          alt="logo"
+          width={141}
+          height={36}
+          className="w-[141px] h-[36px]"
+        />
       </Link>
 
-      <NavbarContent justify="end">
-        <NavbarItem>
+      <div className="flex flex-row justify-end items-center gap-4">
+        <div>
           <Input
             placeholder="Search for something"
             prefix={<HiMiniMagnifyingGlass className="text-placeholderICON mx-2" />}
             className="hidden md:flex md:w-full lg:w-[409px] h-full rounded-[40px] bg-placeholderBG border-none"
           />
-        </NavbarItem>
-        <NavbarItem>
+        </div>
+        <div>
           <Dropdown
             menu={{items}}
             trigger={[ 'click' ]}
@@ -88,11 +83,11 @@ export default function Authbar() {
               className="w-[30px] h-[30px] object-cover rounded-full outline outline-[7px] outline-placeholderBG"
             />
           </Dropdown>
-        </NavbarItem>
-        <NavbarItem>
+        </div>
+        <div>
           <SigninButton />
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+        </div>
+      </div>
+    </nav>
   );
 }
