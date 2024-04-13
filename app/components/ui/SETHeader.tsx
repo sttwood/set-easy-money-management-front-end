@@ -6,10 +6,11 @@ import {DatePicker} from 'antd'
 export enum RightElementType {
   SelectYear = "selectYear",
   Export = "export",
+  Create = "create"
 }
 
 interface Prop {
-  title: string
+  title?: string
   onClick?: () => void
   rightElementType?: RightElementType
 }
@@ -30,7 +31,7 @@ const SETHeader = (prop: Prop) => {
             suffixIcon={
               <IoIosArrowDown />
             }
-            className='border-borderLightBlue rounded-[15px] text-bluePastelText text-[15px]'
+            className='border-borderLightBlue rounded-[15px] text-bluePastel text-[15px]'
           />
         )
       case RightElementType.Export:
@@ -38,8 +39,23 @@ const SETHeader = (prop: Prop) => {
           <SETButton
             title='Export'
             type={ButtonType.borderSecondary}
-            buttonStyle='rounded-[50px] border-borderLightBlue text-bluePastelText text-[15px]'
+            buttonStyle='rounded-[50px] border-borderLightBlue text-bluePastel text-[15px]'
           />
+        )
+      case RightElementType.Create:
+        return (
+          <div className='flex flex-row gap-[10px] justify-between items-center'>
+            <SETButton
+              title='Create'
+              type={ButtonType.create}
+              buttonStyle='rounded-[50px] border-borderLightBlue text-[#fff] text-[15px]'
+            />
+            <SETButton
+              title='Export All'
+              type={ButtonType.borderSecondary}
+              buttonStyle='rounded-[50px] border-borderLightBlue text-bluePastel text-[15px]'
+            />
+          </div>
         )
       default:
         return null

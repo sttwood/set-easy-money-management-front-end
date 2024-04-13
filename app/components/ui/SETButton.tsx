@@ -1,11 +1,13 @@
 import {Button} from 'antd'
 import React from 'react'
+import {LuPlusCircle} from "react-icons/lu"
 
 export enum ButtonType {
   primary = "primary",
   secondary = "secondary",
   borderPrimary = "borderPrimary",
   borderSecondary = "borderSecondary",
+  create = "create",
 }
 
 interface Props {
@@ -28,6 +30,8 @@ const SETButton = (props: Props) => {
         return "default"
       case ButtonType.borderSecondary:
         return "default"
+      case ButtonType.create:
+        return "primary"
       default:
         return "default"
     }
@@ -43,6 +47,8 @@ const SETButton = (props: Props) => {
         return "border-1 border-primary text-primary"
       case ButtonType.borderSecondary:
         return "border-1 border-border"
+      case ButtonType.create:
+        return "bg-primary flex flex-row items-center h-[30px]"
       default:
         return ""
     }
@@ -53,6 +59,7 @@ const SETButton = (props: Props) => {
       onClick={handleClick}
       className={`px-5 ${renderButtonType()} ${buttonStyle}`}
       type={renderType()}
+      icon={type === ButtonType.create ? <LuPlusCircle size={17} /> : null}
     >
       {title}
     </Button>

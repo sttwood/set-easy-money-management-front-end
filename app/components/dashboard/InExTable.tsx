@@ -73,7 +73,11 @@ const InExTable = () => {
       title: <p className='text-bluePastel fontBold'>Price</p>,
       key: 'price',
       dataIndex: 'price',
-      render: (price: string) => <p className='text-main'>{price}</p>,
+      render: (price: string) => (
+        <p className='text-main'>
+          {parseFloat(price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+        </p>
+      ),
     },
     {
       title: <p className='text-bluePastel fontBold'>Category</p>,
