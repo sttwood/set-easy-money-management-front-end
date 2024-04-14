@@ -7,6 +7,12 @@ import {signIn} from "next-auth/react";
 import Landingbar from "./components/Landingbar";
 import {useEffect} from "react";
 import {useSidebarData} from "@/context/SidebarContext";
+import SETHeader, {RightElementType} from "./components/ui/SETHeader";
+import SavingsHeader from "./components/dashboard/SavingsHeader";
+import SETBarChart from "./components/ui/SETBarChart";
+import Summary from "./components/savings/Summary";
+import SETAreaChart from "./components/ui/SETAreaChart";
+import SavingsTable from "./components/savings/SavingsTable";
 
 export default function Home() {
   const {isRedirect, updateIsRedirect} = useSidebarData()

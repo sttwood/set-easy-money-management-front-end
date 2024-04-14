@@ -1,6 +1,8 @@
-import {Table, TableProps} from 'antd'
+import {Button, Table, TableProps} from 'antd'
 import dayjs from 'dayjs'
 import React from 'react'
+import {FaRegEdit} from 'react-icons/fa'
+import {RiDeleteBin6Line} from 'react-icons/ri'
 
 interface DataType {
   key: string
@@ -46,10 +48,10 @@ const SavingsTable = () => {
 
   const columns: TableProps<DataType>[ 'columns' ] = [
     {
-      title: <p className='text-bluePastel fontBold'>Year</p>,
+      title: <p className='text-bluePastel fontBold'>Date</p>,
       key: 'createdAt',
       dataIndex: 'createdAt',
-      render: (createdAt: string) => <p className='text-main'>{dayjs(createdAt).format('YYYY')}</p>,
+      render: (createdAt: string) => <p className='text-main'>{dayjs(createdAt).format('MM-YYYY')}</p>,
     },
     {
       title: <p className='text-bluePastel fontBold'>Deposit Amount</p>,
@@ -101,6 +103,30 @@ const SavingsTable = () => {
           {parseFloat(total).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
         </p>
       ),
+    },
+    {
+      title: <p className='text-bluePastel fontBold'>Actions</p>,
+      key: 'actions',
+      dataIndex: 'actions',
+      render: () => {
+        return (
+          <div className='flex flex-row items-center gap-2'>
+            <Button
+              onClick={() => {}}
+              className='border-0 p-2 bg-transparent'
+            >
+              <FaRegEdit className='text-[#3F434A]' size={14} />
+            </Button>
+            <Button
+              onClick={() => {}}
+              className='border-0 p-2 bg-transparent'
+            >
+              <RiDeleteBin6Line className='text-[#3F434A]' size={14} />
+            </Button>
+          </div>
+        )
+      },
+      width: 100
     },
   ];
 

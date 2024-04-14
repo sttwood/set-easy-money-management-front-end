@@ -41,11 +41,10 @@ const SETPieChart = () => {
   }
 
   return (
-    <div>
-      <Pie
-        data={data}
-      />
-    </div>
+    <Pie
+      data={data}
+      className='w-full'
+    />
   )
 }
 

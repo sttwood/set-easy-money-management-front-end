@@ -23,7 +23,7 @@ const config: Config = {
       "alert": "#FF2F2F",
       "lightAlert": "#FF2F2F",
       "secondaryBG": "#F4F6F9",
-      "borderLightBlue": "#DFEAF2",
+      "lightBlue": "#DFEAF2",
       "bluePastel": "#718EBF",
       "greenPastel": "#BEECE1",
       "rePastel": "#BEECE1",

@@ -152,7 +152,7 @@ const InExTable = () => {
           suffixIcon={
             <IoIosArrowDown />
           }
-          className='border-borderLightBlue rounded-[15px] text-bluePastel text-[15px] w-full'
+          className='border-lightBlue rounded-[15px] text-bluePastel text-[15px] w-full'
           allowClear={false}
         />
         <Input
