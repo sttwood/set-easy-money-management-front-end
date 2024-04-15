@@ -18,12 +18,12 @@ const SavingsPage = () => {
 
   return (
     <>
-      <main className={`bg-secondaryBG h-screen py-6 pr-6 transition-all ${collapsed ? 'pl-20' : 'pl-[299px]'}`}>
+      <main className={`bg-secondaryBG py-6 pr-6 transition-all ${collapsed ? 'pl-20' : 'pl-[299px]'}`}>
         <SETHeader
           rightElementType={RightElementType.Create}
         />
-        <div className="gap-6 flex flex-col">
-          <div className="w-[90%] mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
+        <div className="gap-6 flex flex-col mt-6">
+          <div className="mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
             <SETHeader
               title='Savings Graph'
               rightElementType={RightElementType.SelectYear}
@@ -31,11 +31,11 @@ const SavingsPage = () => {
             <SETAreaChart />
           </div>
 
-          <div className="w-[90%] mx-auto p-6 bg-[#fff] rounded-[8px]">
+          <div className="mx-auto p-6 bg-[#fff] rounded-[8px]">
             <Summary />
           </div>
 
-          <div className="w-[90%] mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
+          <div className="mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
             <SavingsTable />
           </div>
         </div>

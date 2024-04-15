@@ -43,7 +43,6 @@ const SETPieChart = () => {
   return (
     <Pie
       data={data}
-      className='w-full'
     />
   )
 }
