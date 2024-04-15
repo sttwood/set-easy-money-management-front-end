@@ -36,6 +36,7 @@ const SETPieChart = () => {
           'rgba(255, 159, 64, 0.2)',
         ],
         borderWidth: 0,
+        maxHeight: 254
       },
     ]
   }

@@ -23,7 +23,7 @@ const SavingsPage = () => {
           rightElementType={RightElementType.Create}
         />
         <div className="gap-6 flex flex-col mt-6">
-          <div className="mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
+          <div className="w-full mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
             <SETHeader
               title='Savings Graph'
               rightElementType={RightElementType.SelectYear}
@@ -31,11 +31,11 @@ const SavingsPage = () => {
             <SETAreaChart />
           </div>
 
-          <div className="mx-auto p-6 bg-[#fff] rounded-[8px]">
+          <div className="w-full mx-auto p-6 bg-[#fff] rounded-[8px]">
             <Summary />
           </div>
 
-          <div className="mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
+          <div className="w-full mx-auto p-6 bg-[#fff] rounded-[8px] gap-6 flex flex-col">
             <SavingsTable />
           </div>
         </div>
