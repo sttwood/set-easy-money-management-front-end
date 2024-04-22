@@ -24,11 +24,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions)
+  // const session = await getServerSession(authOptions)
 
-  if (session) {
-    redirect("/dashboard")
-  }
+  // if (session) {
+  //   redirect("/dashboard")
+  // }
 
   return (
     <html lang="en">
