@@ -87,7 +87,7 @@ const Siderbar = () => {
             <Link
               key={`menu-item-${index}`}
               href={item.path}
-              className={`group relative flex flex-row items-center cursor-pointer transition-all ${pathname === item.path ? 'bg-secondaryBG' : ''} ${collapsed && 'justify-center'}`}
+              className={`group relative flex flex-row items-center cursor-pointer transition-all ${pathname === item.path ? 'bg-secondaryBG' : ''} ${collapsed && 'justify-center hover:bg-secondaryBG'}`}
               onClick={() => {
                 updateTitlePage(item.title)
                 if (pathname !== item.path) {

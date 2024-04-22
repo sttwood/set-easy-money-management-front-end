@@ -53,11 +53,6 @@ export default function Dashboardbar() {
       </h2>
 
       <div className="flex flex-row items-center gap-[24px] lg:gap-[48px]">
-        <Input
-          placeholder="Search for something"
-          prefix={<HiMiniMagnifyingGlass className="text-placeholderICON mx-2 text-[20px]" />}
-          className="hidden md:flex md:w-[309px] xl:w-[409px] h-full rounded-[40px] bg-placeholderBG border-none py-[12px] text-base"
-        />
         <div className="flex flex-row gap-[24px] xl:gap-[30px] items-center">
           <Button
             disabled

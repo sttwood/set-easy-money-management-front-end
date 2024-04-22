@@ -7,7 +7,7 @@ const DashboardLayout = ({children}: {children: ReactNode}) => {
   return (
     <Layout style={{minHeight: '100vh', display: 'flex', flexDirection: 'row'}}>
       <Siderbar />
-      <Layout>
+      <Layout className='w-full'>
         <Dashboardbar />
         {children}
       </Layout>

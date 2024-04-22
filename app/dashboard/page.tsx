@@ -9,6 +9,7 @@ import {useSidebarData} from '@/context/SidebarContext'
 import {Spin} from 'antd'
 import SETBarChart from '../components/ui/SETBarChart'
 import SavingsHeader from '../components/dashboard/SavingsHeader'
+import SavingsTable from '../components/dashboard/SavingsTable'
 
 const DashboardPage = () => {
   const {collapsed, isRedirect, updateIsRedirect} = useSidebarData()
@@ -20,17 +21,17 @@ const DashboardPage = () => {
   return (
     <>
       <main className={`bg-secondaryBG py-6 pr-6 transition-all ${collapsed ? 'pl-20' : 'pl-[299px]'}`}>
-        <div className=" mx-auto p-6 bg-[#fff] rounded-[8px]">
+        <div className="mx-auto p-6 bg-[#fff] rounded-[8px]">
           <Summary />
         </div>
-        <div className=" mx-auto p-6 bg-[#fff] rounded-[8px] mt-6">
+        <div className="mx-auto p-6 bg-[#fff] rounded-[8px] mt-6">
           <SETHeader
             title="Income-Expense Graph"
             rightElementType={RightElementType.SelectYear}
           />
           <SETBarChart />
         </div>
-        <div className="flex flex-row justify-between gap-6  mx-auto">
+        <div className="flex flex-row justify-between gap-6 mx-auto">
           <div className="w-full mx-auto p-6 bg-[#fff] rounded-[8px] mt-6">
             <SETHeader
               title="Income-Expense"
@@ -44,7 +45,7 @@ const DashboardPage = () => {
               rightElementType={RightElementType.Export}
             />
             <SavingsHeader />
-            <SETBarChart />
+            <SavingsTable />
           </div>
         </div>
       </main>

@@ -35,8 +35,7 @@ const SETPieChart = () => {
           'rgba(153, 102, 255, 0.2)',
           'rgba(255, 159, 64, 0.2)',
         ],
-        borderWidth: 0,
-        maxHeight: 254
+        borderWidth: 0
       },
     ]
   }
@@ -44,6 +43,7 @@ const SETPieChart = () => {
   return (
     <Pie
       data={data}
+      className='w-full max-w-[400px] max-h-[400px]'
     />
   )
 }

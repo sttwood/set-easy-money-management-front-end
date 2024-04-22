@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const SavingsHeader = () => {
   return (
-    <div className="flex flex-row justify-between gap-6">
+    <div className="flex flex-row justify-between gap-6 mt-4">
       <div className="flex flex-row gap-6 bg-[#F4FEED] py-4 px-6 rounded-[20px] w-full items-center">
         <div className="bg-[#CFFCC3] p-[13.5px] rounded-full flex items-center max-h-[45px]">
           <Image
