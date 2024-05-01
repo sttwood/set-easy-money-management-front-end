@@ -6,9 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model Account {
@@ -38,6 +38,14 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model User {
   id            String    @id @default(cuid())
   firstName     String?
@@ -50,12 +58,46 @@ model User {
   role          String?
   accounts      Account[]
   sessions      Session[]
+  Income        Income[]
+  Expense       Expense[]
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+model Category {
+  id      String    @id @default(cuid())
+  name    String
+  type    String
+  Income  Income[]
+  Expense Expense[]
+}
 
-  @@unique([identifier, token])
+model Income {
+  id         String   @id @default(cuid())
+  amount     String
+  note       String
+  date       DateTime
+  userId     String
+  categoryId String
+  user       User     @relation(fields: [userId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Expense {
+  id         String   @id @default(cuid())
+  amount     String
+  note       String
+  date       DateTime
+  userId     String
+  categoryId String
+  user       User     @relation(fields: [userId], references: [id])
+  Category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Savings {
+  id            String   @id @default(cuid())
+  amount        String
+  presentAmount String
+  interest      String
+  interestRate  String
+  totalAmount   String
+  date          DateTime
 }
