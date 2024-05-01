@@ -6,8 +6,7 @@ import * as bcrypt from "bcrypt"
 import {compileActivationTemplate, compileResetTemplate, sendMail} from "../mail";
 import {signJwt, verifyJwt} from "../jwt";
 
-export async function registerUser(user: Omit<User, 'id' | 'emailVerified' | 'image'>) {
-
+export async function registerUser(user: Omit<User, 'id' | 'email_verified' | 'image'>) {
   const result = await prisma.user.create({
     data: {
       ...user,
@@ -20,7 +19,7 @@ export async function registerUser(user: Omit<User, 'id' | 'emailVerified' | 'im
     id: result.id
   })
   const activationUrl = `${process.env.NEXTAUTH_URL}/auth/activation/${jwtUserId}`
-  const body = compileActivationTemplate(user.firstName ?? '', activationUrl)
+  const body = compileActivationTemplate(user.first_name ?? '', activationUrl)
   await sendMail({
     to: user.email ?? '',
     subject: "Activate your Account",
@@ -46,13 +45,13 @@ export const activateUser: ActivateUserFunc = async (jwtUserId) => {
   })
 
   if (!user) return "userNotExist"
-  if (user.emailVerified) return "alreadyActivated"
+  if (user.email_verified) return "alreadyActivated"
   const result = await prisma.user.update({
     where: {
       id: userId
     },
     data: {
-      emailVerified: new Date()
+      email_verified: new Date()
     }
   })
 
@@ -73,7 +72,7 @@ export async function forgotPassword(email: string) {
     id: user.id
   })
   const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/resetPass/${jwtUserId}`
-  const body = compileResetTemplate(user.firstName ?? '', resetPassUrl)
+  const body = compileResetTemplate(user.first_name ?? '', resetPassUrl)
   const sendResult = await sendMail({
     to: user.email ?? '',
     subject: "Reset Password",

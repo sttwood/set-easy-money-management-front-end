@@ -46,8 +46,8 @@ const SignUpForm = (props: Props) => {
     const {accepted, confirmPassword, ...user} = data
 
     const finalData = {
-      firstName: data.firstName,
-      lastName: data.lastName,
+      first_name: data.firstName,
+      last_name: data.lastName,
       email: data.email,
       phone: data.phone,
       password: data.password,

@@ -12,30 +12,30 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+  id                  String  @id @default(cuid())
+  user_id             String
+  type                String
+  provider            String
+  provider_account_id String
+  refresh_token       String? @db.Text
+  access_token        String? @db.Text
+  expires_at          Int?
+  token_type          String?
+  scope               String?
+  id_token            String? @db.Text
+  session_state       String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
+  @@unique([provider, provider_account_id])
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String   @id @default(cuid())
+  session_token String   @unique
+  user_id       String
+  expires       DateTime
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -47,57 +47,63 @@ model VerificationToken {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  firstName     String?
-  lastName      String?
-  password      String
-  email         String    @unique
-  emailVerified DateTime?
-  phone         String?
-  image         String?
-  role          String?
-  accounts      Account[]
-  sessions      Session[]
-  Income        Income[]
-  Expense       Expense[]
+  id             String     @id @default(cuid())
+  first_name     String?
+  last_name      String?
+  password       String
+  email          String     @unique
+  email_verified DateTime?
+  phone          String?
+  image          String?
+  role           String?
+  accounts       Account[]
+  sessions       Session[]
+  income         Income[]
+  expense        Expense[]
+  savings        Savings[]
+  Category       Category[]
 }
 
 model Category {
   id      String    @id @default(cuid())
+  user_id String
   name    String
   type    String
-  Income  Income[]
-  Expense Expense[]
+  income  Income[]
+  expense Expense[]
+  user    User      @relation(fields: [user_id], references: [id])
 }
 
 model Income {
-  id         String   @id @default(cuid())
-  amount     String
-  note       String
-  date       DateTime
-  userId     String
-  categoryId String
-  user       User     @relation(fields: [userId], references: [id])
-  category   Category @relation(fields: [categoryId], references: [id])
+  id          String   @id @default(cuid())
+  user_id     String
+  category_id String
+  amount      String
+  note        String
+  date        DateTime
+  user        User     @relation(fields: [user_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
 }
 
 model Expense {
-  id         String   @id @default(cuid())
-  amount     String
-  note       String
-  date       DateTime
-  userId     String
-  categoryId String
-  user       User     @relation(fields: [userId], references: [id])
-  Category   Category @relation(fields: [categoryId], references: [id])
+  id          String   @id @default(cuid())
+  user_id     String
+  category_id String
+  amount      String
+  note        String
+  date        DateTime
+  user        User     @relation(fields: [user_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
 }
 
 model Savings {
-  id            String   @id @default(cuid())
-  amount        String
-  presentAmount String
-  interest      String
-  interestRate  String
-  totalAmount   String
-  date          DateTime
+  id             String   @id @default(cuid())
+  user_id        String
+  amount         String
+  present_amount String
+  interest       String
+  interest_rate  String
+  total_amount   String
+  date           DateTime
+  user           User     @relation(fields: [user_id], references: [id])
 }
