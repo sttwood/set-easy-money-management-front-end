@@ -15,13 +15,13 @@ const ProfilePage = async () => {
         src={user?.image ?? ''}
         height={300}
         width={300}
-        alt={`${user?.firstName ?? ''} profile image`}
+        alt={`${user?.first_name ?? ''} profile image`}
       />
       <div className="grid grid-cols-4 gap-y-4">
         <p>First Name: </p>
-        <p className='col-span-3'>{user?.firstName ?? ''}</p>
+        <p className='col-span-3'>{user?.first_name ?? ''}</p>
         <p>Last Name: </p>
-        <p className='col-span-3'>{user?.lastName ?? ''}</p>
+        <p className='col-span-3'>{user?.last_name ?? ''}</p>
         <p>Phone: </p>
         <p className='col-span-3'>{user?.phone ?? ''}</p>
         <p>Email: </p>

@@ -13,8 +13,8 @@ export default withAuth({
 
 export const config = {
   matcher: [
-    // '/dashboard',
-    // '/income-expense',
-    // '/savings',
+    '/dashboard',
+    '/income-expense',
+    '/savings',
   ]
 }
