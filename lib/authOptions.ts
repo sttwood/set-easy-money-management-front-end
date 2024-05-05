@@ -43,7 +43,7 @@ export const authOptions: AuthOptions = {
 
         if (!user.email_verified) throw new Error("Please verify your email first!")
 
-        const {id, password, ...userWithoutPass} = user
+        const {password, ...userWithoutPass} = user
         return userWithoutPass as User
       }
     }),
@@ -56,7 +56,6 @@ export const authOptions: AuthOptions = {
     },
     async session({session, token}) {
       session.user = token.user
-
       return session
     }
   }

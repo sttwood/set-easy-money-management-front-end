@@ -49,6 +49,7 @@ const SETHeader = (prop: Prop) => {
               title='Create'
               type={ButtonType.create}
               buttonStyle='rounded-[50px] border-lightBlue text-[#fff] text-[15px]'
+              handleClick={onClick}
             />
             <SETButton
               title='Export All'

@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {Inter, Karla} from "next/font/google";
+import {Karla} from "next/font/google";
 import {Providers} from "./providers";
 
 import "./globals.css";
@@ -8,10 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import {redirect} from "next/navigation";
 import {authOptions} from "@/lib/authOptions";
 import {getServerSession} from "next-auth";
-import {createContext} from "react";
 import {SidebarProvider} from "@/context/SidebarContext";
 
-const inter = Inter({subsets: [ "latin" ]});
 const karla = Karla({subsets: [ "latin" ]});
 
 export const metadata: Metadata = {
