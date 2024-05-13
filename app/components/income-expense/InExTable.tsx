@@ -3,28 +3,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react'
 import {Button, Input, Table, TableProps, Tag} from 'antd'
-import {IoIosArrowDown} from "react-icons/io"
 import {HiMiniMagnifyingGlass} from 'react-icons/hi2'
 import dayjs from 'dayjs'
-import {DataType} from '@/app/income-expense/page'
 import {FaRegEdit} from "react-icons/fa"
 import {RiDeleteBin6Line} from "react-icons/ri"
+import {IncomeExpense} from '@/app/apis/types/incomeExpense'
+import {getIncomeExpenseById} from '@/app/apis/incomeExpense'
 
 type Props = {
-  data: DataType[]
+  data: IncomeExpense[]
+  loading?: boolean
+  onDelete: (id: number) => void
+  onEdit: (id: number) => void
 }
 
 const InExTable = (prop: Props) => {
-  const {data} = prop
+  const {data, loading, onDelete, onEdit} = prop
 
   const [ searchText, setSearchText ] = useState<string>('')
-  const [ filteredList, setFilteredList ] = useState<DataType[]>(data)
+  const [ filteredList, setFilteredList ] = useState<IncomeExpense[]>(data)
 
-  const columns: TableProps<DataType>[ 'columns' ] = [
+  const columns: TableProps<IncomeExpense>[ 'columns' ] = [
     {
       title: <p className='text-bluePastel fontBold'>Date</p>,
-      key: 'createdAt',
-      dataIndex: 'createdAt',
+      key: 'date',
+      dataIndex: 'date',
       render: (createdAt: string) => <p className='text-main'>{dayjs(createdAt).format('MM-DD-YYYY')}</p>,
     },
     {
@@ -34,39 +37,71 @@ const InExTable = (prop: Props) => {
       render: (note: string) => <p className='text-main'>{note}</p>,
     },
     {
-      title: <p className='text-bluePastel fontBold'>Price</p>,
-      key: 'price',
-      dataIndex: 'price',
-      render: (price: string) => (
+      title: <p className='text-bluePastel fontBold'>Amount</p>,
+      key: 'amount',
+      dataIndex: 'amount',
+      render: (amount: string) => (
         <p className='text-main'>
-          {parseFloat(price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+          {parseFloat(amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
         </p>
       ),
     },
     {
       title: <p className='text-bluePastel fontBold'>Category</p>,
-      key: 'category',
-      dataIndex: 'category',
-      render: (category: string) => <p className='text-main'>{category}</p>,
+      dataIndex: [ 'category', 'type' ],
+      key: 'type',
+      render: (categoryType: string, record: IncomeExpense) => {
+        if (categoryType === 'expense') {
+          return (
+            <Tag
+              color="error"
+              className='w-full text-center text-[10px]'
+              style={{
+                backgroundColor: '#fff'
+              }}
+            >
+              {record.category?.name}
+            </Tag>
+          )
+        } else if (categoryType === 'income') {
+          return (
+            <Tag
+              color="green"
+              className='w-full text-center text-[10px]'
+              style={{
+                backgroundColor: '#fff',
+              }}
+            >
+              {record.category?.name}
+            </Tag>
+          )
+        } else {
+          return <Tag className='w-full text-center text-[10px]' style={{backgroundColor: '#fff'}}>{categoryType}</Tag>;
+        }
+      },
     },
     {
       title: <p className='text-bluePastel fontBold'>Actions</p>,
       key: 'actions',
       dataIndex: 'actions',
-      render: () => {
+      render: (text: string, record: IncomeExpense) => {
         return (
           <div className='flex flex-row items-center gap-2'>
             <Button
-              onClick={() => {}}
-              className='border-0 p-2 bg-transparent'
+              onClick={() => {
+                onEdit(record.id)
+              }}
+              className='border-0 p-2 bg-transparent shadow-none group'
             >
-              <FaRegEdit className='text-[#3F434A]' size={14} />
+              <FaRegEdit className='text-[#3F434A] group-hover:text-[#FFBB38]' size={14} />
             </Button>
             <Button
-              onClick={() => {}}
-              className='border-0 p-2 bg-transparent'
+              onClick={() => {
+                onDelete(record.id)
+              }}
+              className='border-0 p-2 bg-transparent shadow-none group'
             >
-              <RiDeleteBin6Line className='text-[#3F434A]' size={14} />
+              <RiDeleteBin6Line className='text-[#3F434A] group-hover:text-[#FF2F2F]' size={14} />
             </Button>
           </div>
         )
@@ -76,14 +111,18 @@ const InExTable = (prop: Props) => {
   ];
 
   useEffect(() => {
+    setFilteredList(data)
+  }, [ data ])
+
+  useEffect(() => {
     if (searchText !== '') {
-      setFilteredList(data.filter((item: DataType) => {
-        const formattedCreatedAtDate = dayjs(item.createdAt).format('MM-DD-YYYY')
+      setFilteredList(data.filter((item: IncomeExpense) => {
+        const formattedCreatedAtDate = dayjs(item.date).format('MM-DD-YYYY')
 
         const matchesSearchText = (
           item.note.toLowerCase().includes(searchText) ||
-          item.price.includes(searchText) ||
-          item.category.toLowerCase().includes(searchText) ||
+          item.amount.includes(searchText) ||
+          item.category?.name?.toLowerCase().includes(searchText) ||
           formattedCreatedAtDate.includes(searchText)
         )
 
@@ -104,7 +143,11 @@ const InExTable = (prop: Props) => {
           onChange={(e) => setSearchText(e.target.value.toLowerCase())}
         />
       </div>
-      <Table columns={columns} dataSource={filteredList} />
+      <Table
+        columns={columns}
+        dataSource={filteredList}
+        loading={loading}
+      />
     </div>
   )
 }

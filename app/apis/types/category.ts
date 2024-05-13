@@ -9,3 +9,9 @@ export type Category = {
   type: string
   user_id: string
 }
+
+export type CategoryBody = {
+  name: string
+  type: string
+  user_id: string
+}

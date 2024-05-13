@@ -14,7 +14,14 @@ export type IncomeExpense = {
   note: string
   user_id: string
   category_id: number
+  category?: {
+    name?: string
+    type?: string
+    amount?: string
+  }
   date: Date
+  created_at?: Date
+  updated_at?: Date
 }
 
 export type IncomeExpenseBody = {

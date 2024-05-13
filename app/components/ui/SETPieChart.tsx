@@ -11,22 +11,20 @@ import {Pie} from 'react-chartjs-2'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const SETPieChart = () => {
+type Props = {
+  datasource: number[]
+  labels: string[]
+}
 
-  const labels = [
-    'Salary',
-    'Freelance',
-    'Food',
-    'Snacks',
-    'Bills'
-  ]
+const SETPieChart = (props: Props) => {
+  const {datasource, labels} = props
 
   const data = {
     labels,
     datasets: [
       {
         label: '# total amount',
-        data: labels.map(() => Math.floor(Math.random() * 100)),
+        data: datasource,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -39,11 +37,10 @@ const SETPieChart = () => {
       },
     ]
   }
-
   return (
     <Pie
       data={data}
-      className='w-full max-w-[400px] max-h-[400px]'
+      className='w-full max-w-[300px] max-h-[300px]'
     />
   )
 }

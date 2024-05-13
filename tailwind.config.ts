@@ -26,7 +26,7 @@ const config: Config = {
       "lightBlue": "#DFEAF2",
       "bluePastel": "#718EBF",
       "greenPastel": "#BEECE1",
-      "rePastel": "#BEECE1",
+      "redPastel": "#BEECE1",
       "yellowPastel": "#FCD4CF",
       "hoverPrimary": "#F5E6C2",
       "hoverDanger": "#FF7875",

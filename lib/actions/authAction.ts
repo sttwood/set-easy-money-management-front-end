@@ -18,7 +18,7 @@ export async function registerUser(user: Omit<User, 'id' | 'email_verified' | 'i
   const jwtUserId = signJwt({
     id: result.id
   })
-  const activationUrl = `${process.env.NEXTAUTH_URL}/auth/activation/${jwtUserId}`
+  const activationUrl = `${process.env.NEXT_PUBLIC_URL}/auth/activation/${jwtUserId}`
   const body = compileActivationTemplate(user.first_name ?? '', activationUrl)
   await sendMail({
     to: user.email ?? '',
@@ -71,7 +71,7 @@ export async function forgotPassword(email: string) {
   const jwtUserId = signJwt({
     id: user.id
   })
-  const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/resetPass/${jwtUserId}`
+  const resetPassUrl = `${process.env.NEXT_PUBLIC_URL}/auth/resetPass/${jwtUserId}`
   const body = compileResetTemplate(user.first_name ?? '', resetPassUrl)
   const sendResult = await sendMail({
     to: user.email ?? '',
