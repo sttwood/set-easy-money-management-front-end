@@ -87,7 +87,7 @@ const SETBarChart = () => {
     <Bar
       data={data}
       options={options}
-      className='w-full max-h-[550px]'
+      className='w-full max-h-[450px]'
     />
   )
 }

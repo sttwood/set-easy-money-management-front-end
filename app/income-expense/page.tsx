@@ -24,7 +24,6 @@ const IncomeExpensePage = () => {
   const {collapsed, isRedirect, updateIsRedirect} = useSidebarData()
 
   const [ categoryList, setCategoryList ] = useState<Category[]>()
-  const [ incomeExpenseData, setIncomeExpenseData ] = useState<IncomeExpense[]>([])
   // Income
   const [ incomeData, setIncomeData ] = useState<IncomeExpense[]>([])
   const [ incomeLabels, setIncomeLabels ] = useState<string[]>([])
@@ -50,51 +49,8 @@ const IncomeExpensePage = () => {
 
   useEffect(() => {
     updateIsRedirect(false)
-    initCategory()
     initIncomeExpense()
   }, [])
-
-  useEffect(() => {
-    const transformData = incomeExpenseData.map((item) => ({
-      ...item,
-      category: {
-        name: categoryList?.find((category) => category.id === item.category_id)?.name,
-        type: categoryList?.find((category) => category.id === item.category_id)?.type,
-        amount: item.amount
-      },
-    }))
-
-    const filteredIncomeData = transformData.filter((data) => data.category.type === 'income')
-    const filteredExpenseData = transformData.filter((data) => data.category.type === 'expense')
-
-    const sumsIncomeByCategory: Record<string, number> = {}
-    filteredIncomeData.map((data) => {
-      const {name, amount} = data.category
-      const parsedAmount = parseFloat(amount)
-
-      sumsIncomeByCategory[ name || '' ] = (sumsIncomeByCategory[ name || '' ] || 0) + parsedAmount
-    })
-    const sumsExpenseByCategory: Record<string, number> = {}
-    filteredExpenseData.map((data) => {
-      const {name, amount} = data.category
-      const parsedAmount = parseFloat(amount)
-
-      sumsExpenseByCategory[ name || '' ] = (sumsExpenseByCategory[ name || '' ] || 0) + parsedAmount
-    })
-
-    const incomeLabels = new Set(filteredIncomeData.map((data) => data.category.name))
-    const incomeDataValues = Object.values(sumsIncomeByCategory)
-    const expenseLabels = new Set(filteredExpenseData.map((data) => data.category.name))
-    const expenseDataValues = Object.values(sumsExpenseByCategory)
-
-    setIncomeLabels(Array.from(incomeLabels) as string[])
-    setIncomeDataValues(incomeDataValues)
-    setExpenseLabels(Array.from(expenseLabels) as string[])
-    setExpenseDataValues(expenseDataValues)
-
-    setIncomeData(filteredIncomeData)
-    setExpenseData(filteredExpenseData)
-  }, [ incomeExpenseData ])
 
   const initCategory = async () => {
     try {
@@ -113,10 +69,52 @@ const IncomeExpensePage = () => {
     try {
       if (session) {
         const userId = session.user.id
-        const res: IncomeExpenseResponses = await getAllIncomeExpense(userId)
 
-        if (res?.status === 'success') {
-          setIncomeExpenseData(res.data)
+        const categoryRes: CategoryResponses = await getAllCategory(userId)
+        const IncomeExpenseRes: IncomeExpenseResponses = await getAllIncomeExpense(userId)
+
+        if (IncomeExpenseRes?.status === 'success' && categoryRes?.status === 'success') {
+
+          const transformData = IncomeExpenseRes.data.map((item) => ({
+            ...item,
+            category: {
+              name: categoryRes.data.find((category) => category.id === item.category_id)?.name,
+              type: categoryRes.data.find((category) => category.id === item.category_id)?.type,
+              amount: item.amount
+            },
+          }))
+
+          const filteredIncomeData = transformData.filter((data) => data.category.type === 'income')
+          const filteredExpenseData = transformData.filter((data) => data.category.type === 'expense')
+
+          const sumsIncomeByCategory: Record<string, number> = {}
+          filteredIncomeData.map((data) => {
+            const {name, amount} = data.category
+            const parsedAmount = parseFloat(amount)
+
+            sumsIncomeByCategory[ name || '' ] = (sumsIncomeByCategory[ name || '' ] || 0) + parsedAmount
+          })
+          const sumsExpenseByCategory: Record<string, number> = {}
+          filteredExpenseData.map((data) => {
+            const {name, amount} = data.category
+            const parsedAmount = parseFloat(amount)
+
+            sumsExpenseByCategory[ name || '' ] = (sumsExpenseByCategory[ name || '' ] || 0) + parsedAmount
+          })
+
+          const incomeLabels = new Set(filteredIncomeData.map((data) => data.category.name))
+          const incomeDataValues = Object.values(sumsIncomeByCategory)
+          const expenseLabels = new Set(filteredExpenseData.map((data) => data.category.name))
+          const expenseDataValues = Object.values(sumsExpenseByCategory)
+
+          setIncomeLabels(Array.from(incomeLabels) as string[])
+          setIncomeDataValues(incomeDataValues)
+          setExpenseLabels(Array.from(expenseLabels) as string[])
+          setExpenseDataValues(expenseDataValues)
+
+          setIncomeData(filteredIncomeData)
+          setExpenseData(filteredExpenseData)
+          setCategoryList(categoryRes.data)
           setLoading(false)
         }
       }

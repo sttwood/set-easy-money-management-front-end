@@ -31,3 +31,9 @@ export type IncomeExpenseBody = {
   category_id: number
   date: Date
 }
+
+export type totalSummary = {
+  income: number | null
+  expense: number | null
+  savings: number | null
+}

@@ -2,61 +2,28 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react'
+import dayjs from 'dayjs'
+
 import {DatePicker, Input, Table, TableProps, Tag} from 'antd'
 import {IoIosArrowDown} from "react-icons/io"
 import {HiMiniMagnifyingGlass} from 'react-icons/hi2'
-import dayjs from 'dayjs'
 
-interface DataType {
-  key: string
-  note: string
-  price: string
-  category: string
-  categoryTypeId: number
-  createdAt: string
+import {Currency} from '@/app/utils/currency'
+import {IncomeExpense} from '@/app/apis/types/incomeExpense'
+
+type Props = {
+  data: IncomeExpense[]
+  loading?: boolean
 }
 
-const data: DataType[] = [
-  {
-    key: '1',
-    note: 'Lunch',
-    price: '50.00',
-    category: 'Food',
-    categoryTypeId: 1,
-    createdAt: String(new Date()),
-  },
-  {
-    key: '1',
-    note: 'Salary',
-    price: '22000.00',
-    category: 'Salary',
-    categoryTypeId: 2,
-    createdAt: String(new Date()),
-  },
-  {
-    key: '1',
-    note: 'Mobile bills',
-    price: '240.00',
-    category: 'Bills',
-    categoryTypeId: 1,
-    createdAt: String(new Date()),
-  },
-  {
-    key: '1',
-    note: 'Drinks & Snacks',
-    price: '100.00',
-    category: 'Snacks',
-    categoryTypeId: 1,
-    createdAt: String(new Date()),
-  },
-];
+const InExTable = (props: Props) => {
+  const {data, loading} = props
 
-const InExTable = () => {
   const [ selectMonth, setSelectMonth ] = useState<string>(dayjs(new Date()).format('MM-DD-YYYY'))
   const [ searchText, setSearchText ] = useState<string>('')
-  const [ filteredList, setFilteredList ] = useState<DataType[]>(data)
+  const [ filteredList, setFilteredList ] = useState<IncomeExpense[]>(data)
 
-  const columns: TableProps<DataType>[ 'columns' ] = [
+  const columns: TableProps<IncomeExpense>[ 'columns' ] = [
     {
       title: <p className='text-bluePastel fontBold'>Date</p>,
       key: 'createdAt',
@@ -70,21 +37,21 @@ const InExTable = () => {
       render: (note: string) => <p className='text-main'>{note}</p>,
     },
     {
-      title: <p className='text-bluePastel fontBold'>Price</p>,
-      key: 'price',
-      dataIndex: 'price',
+      title: <p className='text-bluePastel fontBold'>Amount</p>,
+      key: 'amount',
+      dataIndex: 'amount',
       render: (price: string) => (
         <p className='text-main'>
-          {parseFloat(price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+          {Currency(Number(price), false)}
         </p>
       ),
     },
     {
       title: <p className='text-bluePastel fontBold'>Category</p>,
-      key: 'category',
-      dataIndex: 'category',
-      render: (category: string, record: DataType) => {
-        if (record.categoryTypeId === 1) {
+      dataIndex: [ 'category', 'type' ],
+      key: 'type',
+      render: (categoryType: string, record: IncomeExpense) => {
+        if (categoryType === 'expense') {
           return (
             <Tag
               color="error"
@@ -93,10 +60,10 @@ const InExTable = () => {
                 backgroundColor: '#fff'
               }}
             >
-              {category}
+              {record.category?.name}
             </Tag>
           )
-        } else if (record.categoryTypeId === 2) {
+        } else if (categoryType === 'income') {
           return (
             <Tag
               color="green"
@@ -105,25 +72,29 @@ const InExTable = () => {
                 backgroundColor: '#fff',
               }}
             >
-              {category}
+              {record.category?.name}
             </Tag>
           )
         } else {
-          return <Tag>{category}</Tag>;
+          return <Tag className='w-full text-center text-[10px]' style={{backgroundColor: '#fff'}}>{categoryType}</Tag>;
         }
       }
     }
   ];
 
   useEffect(() => {
+    setFilteredList(data)
+  }, [ data ])
+
+  useEffect(() => {
     if (searchText !== '') {
-      setFilteredList(data.filter((item: DataType) => {
-        const formattedCreatedAtDate = dayjs(item.createdAt).format('MM-DD-YYYY')
+      setFilteredList(data.filter((item: IncomeExpense) => {
+        const formattedCreatedAtDate = dayjs(item.date).format('MM-DD-YYYY')
 
         const matchesSearchText = (
           item.note.toLowerCase().includes(searchText) ||
-          item.price.includes(searchText) ||
-          item.category.toLowerCase().includes(searchText) ||
+          item.amount.includes(searchText) ||
+          item.category?.name?.toLowerCase().includes(searchText) ||
           formattedCreatedAtDate.includes(searchText)
         )
 
@@ -162,7 +133,11 @@ const InExTable = () => {
           onChange={(e) => setSearchText(e.target.value.toLowerCase())}
         />
       </div>
-      <Table columns={columns} dataSource={filteredList} />
+      <Table
+        columns={columns}
+        dataSource={filteredList}
+        loading={loading}
+      />
     </div>
   )
 }

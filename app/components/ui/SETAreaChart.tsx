@@ -78,7 +78,7 @@ const SETAreaChart = () => {
     <Line
       options={options}
       data={data}
-      className='w-full max-h-[450px]'
+      className='w-full max-h-[400px]'
     />
   )
 }

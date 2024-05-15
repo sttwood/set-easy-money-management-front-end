@@ -2,7 +2,7 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react'
-import {Button, Input, Table, TableProps, Tag} from 'antd'
+import {Button, Input, Popconfirm, Table, TableProps, Tag} from 'antd'
 import {HiMiniMagnifyingGlass} from 'react-icons/hi2'
 import dayjs from 'dayjs'
 import {FaRegEdit} from "react-icons/fa"
@@ -95,14 +95,22 @@ const InExTable = (prop: Props) => {
             >
               <FaRegEdit className='text-[#3F434A] group-hover:text-[#FFBB38]' size={14} />
             </Button>
-            <Button
-              onClick={() => {
+            <Popconfirm
+              title="ลบข้อมูลผลิตภัณฑ์/สินค้า นี้"
+              description="คุณแน่ใจที่จะลบผลิตภัณฑ์/สินค้า นี้?"
+              onConfirm={() => {
                 onDelete(record.id)
               }}
-              className='border-0 p-2 bg-transparent shadow-none group'
+              okText="ใช่"
+              cancelText="ไม่"
+              okButtonProps={{className: 'bg-primary'}}
             >
-              <RiDeleteBin6Line className='text-[#3F434A] group-hover:text-[#FF2F2F]' size={14} />
-            </Button>
+              <Button
+                className='border-0 p-2 bg-transparent shadow-none group'
+              >
+                <RiDeleteBin6Line className='text-[#3F434A] group-hover:text-[#FF2F2F]' size={14} />
+              </Button>
+            </Popconfirm>
           </div>
         )
       },

@@ -2,9 +2,16 @@
 
 import React from 'react'
 import Image from 'next/image'
+import {Currency} from '@/app/utils/currency'
 
-const Summary = () => {
+type Props = {
+  income: number | null
+  expense: number | null
+  savings: number | null
+}
 
+const Summary = (props: Props) => {
+  const {income, expense, savings} = props
 
   return (
     <div className='flex flex-row justify-between gap-6'>
@@ -32,7 +39,7 @@ const Summary = () => {
               Since 01/2024 - Now
             </p>
             <p className='text-xl font-bold text-main'>
-              ฿ 20,000.00
+              ฿ {income ? Currency(income, false) : NaN}
             </p>
           </div>
           <Image
@@ -68,7 +75,7 @@ const Summary = () => {
               Since 01/2024 - Now
             </p>
             <p className='text-xl font-bold text-main'>
-              ฿ 20,000.00
+              ฿ {expense ? Currency(expense, false) : NaN}
             </p>
           </div>
           <Image
@@ -104,7 +111,7 @@ const Summary = () => {
               Since 01/2024 - Now
             </p>
             <p className='text-xl font-bold text-main'>
-              ฿ 20,000.00
+              ฿ {savings ? Currency(savings, false) : NaN}
             </p>
           </div>
           <Image
