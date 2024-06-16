@@ -1,5 +1,5 @@
 ## Demo
-https://set-emm.netlify.app/
+https://set-emm.vercel.app/
 ## Example
 ![image](https://github.com/sttwood/set-easy-money-management/assets/38130691/dc1eb0f5-a22a-4853-a6a8-3e9c7d23c6ef)
 ![image](https://github.com/sttwood/set-easy-money-management/assets/38130691/92d4447b-a480-4950-9b45-71c4fb5f9039)
